@@ -8,9 +8,8 @@ This script was developed by the emergency response team at [ANEXIA](http://www.
 Disclaimer
 ----------
 
-This script does in no way try to exploit the currently vulnerability
-described in MS14-066.
-It merely checks for hints at whether the target system has been patched or not.
+This script does in no way try to exploit the vulnerability described in MS14-066.
+It merely checks for hints on whether the target system has been patched or not.
 For details, have a look at the script itself or read the short 'How it works'
 part of this document below.
 
@@ -31,7 +30,7 @@ The examples above use the default RDP and HTTPS for those checks.
 
 Also, please ensure you are connecting directly to the target system. A
 load balancer or any other form of SSL-offloading may impact the results
-and may generate false-positives.
+and may generate false-positives or false-negatives.
 
 
 How it works
@@ -40,7 +39,8 @@ How it works
 MS14-066 introduced four new SSL ciphers, so a check can be made if
 the target system supports those previously unsupported ciphers.
 winshock_test.sh uses this fact by simply checking if those ciphers are
-supported by the target system or not.
+supported by the target system or not. If they are supported, the patches
+have been applied.
 
 
 
