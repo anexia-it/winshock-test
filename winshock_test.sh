@@ -93,7 +93,7 @@ if [[ "$patched" == "yes" ]]
 then
   patched="\033[92mYES\033[39m"
 else
-  patched="\033[91mNO\033[39m"
+  patched="\033[91mDONTKNOW\033[39m"
 fi
 
 echo -e "System at $SERVER seems to be patched: $patched"
