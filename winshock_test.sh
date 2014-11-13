@@ -74,6 +74,21 @@ do
   fi
 done
 
+# added by @stoep: check whether a 443 port runs IIS
+if [[ "$PORT" == "443" ]]
+then
+  iis=$(curl -I https://$SERVER 2> /dev/null | grep "Server" )
+  echo -en "Testing whether IIS is running on 443 "
+  if [[ $iis == *Microsoft-IIS* ]]
+  then 
+    echo -e "\033[91mYES\033[39m"
+
+  else
+    echo -e "\033[92mNO\033[39m"
+    exit 0
+  fi
+fi
+
 if [[ "$patched" == "yes" ]]
 then
   patched="\033[92mYES\033[39m"
