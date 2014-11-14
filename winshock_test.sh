@@ -77,15 +77,15 @@ done
 # added by @stoep: check whether a 443 port runs IIS
 if [[ "$PORT" == "443" ]]
 then
-  iis=$(curl -I https://$SERVER 2> /dev/null | grep "Server" )
-  echo -en "Testing whether IIS is running on 443 "
+  iis=$(curl -k -I https://$SERVER 2> /dev/null | grep "Server" )
+  echo -n "Testing if IIS is running on port 443: "
   if [[ $iis == *Microsoft-IIS* ]]
   then 
-    echo -e "\033[91mYES\033[39m"
+    echo -e "\033[92mYES\033[39m"
 
   else
-    echo -e "\033[92mNO\033[39m"
-    exit 0
+    echo -e "\033[91mNO\033[39m"
+    echo -e "\033[93mNOTE:\nResults may be incorrect if HTTPS server is not using SChannel or has a customized cipher list.\033[39m"
   fi
 fi
 
