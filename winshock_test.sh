@@ -45,7 +45,7 @@ then
 fi
 
 SERVER=$HOST:$PORT
-echo "Testing ${SERVER} for ciphers added in MS14-066..."
+echo "Testing ${SERVER} for availability of SSL ciphers added in MS14-066..."
 
 # According to https://technet.microsoft.com/library/security/ms14-066 the
 # following ciphers were added with the patch:
@@ -97,4 +97,5 @@ else
 fi
 
 echo -e "System at $SERVER seems to be patched: $patched"
+echo -e "\033[93mNOTE:\nThe information above may be incorrect if the available SSL ciphers have been\nmodified manually or you are not directly connecting to the target system.\033[39m"
 exit 0

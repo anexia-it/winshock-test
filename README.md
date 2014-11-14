@@ -5,6 +5,14 @@ Bash script that tests if a system is Winshock (MS14-066) vulnerable.
 
 This script was developed by the emergency response team at [ANEXIA](http://www.anexia-wwc.com).
 
+Important
+---------
+
+winshock_test.sh does behavioural analysis based upon the available SSL ciphers.
+If you either do not have direct access to the target system due to SSL-offloading in any form or manually modified the available SSL ciphers the script will
+be giving **false positives**.
+
+
 Disclaimer
 ----------
 
@@ -26,7 +34,7 @@ which you can actually connect to. If the script takes long to complete,
 chances are good that either no service is listening on that port or
 a firewall is blocking access to that port.
 
-The examples above use the default RDP and HTTPS for those checks.
+The examples above use the default RDP and HTTPS ports for those checks.
 
 Also, please ensure you are connecting directly to the target system. A
 load balancer or any other form of SSL-offloading may impact the results
