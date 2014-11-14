@@ -62,7 +62,19 @@ for cipher in ${MS14_066_CIPHERS}
 do
   echo -en "Testing cipher ${cipher}: "
   result=$(echo -n | openssl s_client -cipher "$cipher" -connect $SERVER 2>&1)
-  if [[ "$result" =~ "Cipher is ${cipher}" || "$result" =~ "Cipher    : ${cipher}" ]]
+  if [[ "$result" =~ "connect:errno=" ]]
+  then
+    err=$(echo $result | grep ^connect: \
+      | sed -e 's/connect:errno=.*//g' -e 's/connect: //g')
+    echo -e "\033[93mConnection error: $err"
+    echo -e "Aborting checks.\033[39m"
+    exit 1
+  elif [[ "$result" =~ "SSL23_GET_SERVER_HELLO:unknown protocol" ]]
+  then
+    echo -e "\033[93mNo SSL/TLS support on target port."
+    echo -e "Aborting checks.\033[39m"
+    exit 1
+  elif [[ "$result" =~ "Cipher is ${cipher}" || "$result" =~ "Cipher    : ${cipher}" ]]
   then
     echo -e "\033[92mPASS\033[39m"
     if [[ "$patched" == "no" ]]
