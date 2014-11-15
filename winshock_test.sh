@@ -33,7 +33,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-VERSION=0.2.0
+VERSION=0.2.1
 HOST=$1
 PORT=${2:-443}
 
@@ -167,6 +167,7 @@ done
 
 windows_server_2012_or_later="no"
 windows_server_2012_r2="no"
+iis_detected="no"
 # added by @stoep: check whether a 443 port runs IIS
 if [[ "$PORT" == "443" ]]
 then
@@ -175,6 +176,7 @@ then
   if [[ $iis == *Microsoft-IIS* ]]
   then 
     iis_version=$(echo $iis | sed -e 's|Server: Microsoft-IIS/||g')
+    iis_detected="yes"
     echo -e "\033[92mYES - Version ${iis_version}\033[0m"
     if [[ $iis_version == *8.5* ]]
     then
@@ -192,7 +194,7 @@ then
 fi
 
 # Check if Windows Server 2012 or later is running on the remote system...
-if [[ "$windows_server_2012_or_later" == "no"  && "$PORT" != "443" ]]
+if [[ "$windows_server_2012_or_later" == "no"  && "$iis_detected" == "no" ]]
 then
   echo -e "\033[94mChecking if target system is running Windows Server 2012 or later...\033[0m"
   for cipher in ${WINDOWS_SERVER_2012R2_CIPHERS}
