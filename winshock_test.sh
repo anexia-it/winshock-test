@@ -74,6 +74,11 @@ do
     echo -e "\033[93mNo SSL/TLS support on target port."
     echo -e "Aborting checks.\033[39m"
     exit 1
+  elif [[ "$result" =~ "SSL_CTX_set_cipher_list:no cipher match" ]]
+  then
+    echo -e "\033[93mYour version of OpenSSL is not supported."
+    echo -e "Aborting checks.\033[39m"
+    exit 1
   elif [[ "$result" =~ "Cipher is ${cipher}" || "$result" =~ "Cipher    : ${cipher}" ]]
   then
     echo -e "\033[92mPASS\033[39m"
